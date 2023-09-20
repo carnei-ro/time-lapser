@@ -1,0 +1,60 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "timelapser.fullname" . }}
+  labels:
+    {{- include "timelapser.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  suspend: {{ .Values.cronjob.suspend }}
+  concurrencyPolicy: {{ .Values.cronjob.concurrencyPolicy }}
+  successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      parallelism: 1
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "timelapser.selectorLabels" . | nindent 12 }}
+            {{- with .Values.podLabels }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccount: {{ include "timelapser.serviceAccountName" . }}
+          containers:
+            - name: timelapser
+              env:
+                - name: AWS_ENDPOINT_URL
+                  value: {{ .Values.buckets.s3Endpoint }}
+                - name: PHOTOS_BUCKET_NAME
+                  value: {{ .Values.buckets.photosBucketName }}
+                - name: VIDEOS_BUCKET_NAME
+                  value: {{ .Values.buckets.videosBucketName }}
+                - name: RESOLUTION
+                  value: {{ .Values.process.imagesResolution }}
+                - name: DAY_OF_THE_IMAGES
+                  value: {{ .Values.process.imagesFromDay }}
+              {{- if .Values.telegram.enabled }}
+                - name: TELEGRAM_SEND_VIDEO_ENABLED
+                  value: {{ .Values.telegram.enabled | quote }}
+              {{- end }}
+              {{- with .Values.env }}
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              envFrom:
+                - secretRef:
+                    name: {{ include "timelapser.fullname" . }}-creds
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}

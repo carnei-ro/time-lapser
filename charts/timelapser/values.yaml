@@ -1,0 +1,78 @@
+# fullnameOverride -- Overrides the name
+fullnameOverride: ""
+
+# nameOverride -- Overrides the release name
+nameOverride: ""
+
+# podLabels -- Map of additional labels for the pod
+podLabels: {}
+
+# podAnnotations -- Map of additional annotations for the pod
+podAnnotations: {}
+
+image:
+  # image.repository -- Image name
+  repository: ghcr.io/carnei-ro/time-lapser
+  # image.tag -- Image tag
+  tag: "sha-5d758e6"
+  # image.pullPolicy -- Image pull policy
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    # resources.requests.cpu -- How much CPU a container is guaranteed to get
+    cpu: 50m
+    # resources.requests.memory -- How much memory a container is guaranteed to get
+    memory: 128Mi
+  limits:
+    # resources.limits.cpu -- How much CPU a container never goes above
+    cpu: 400m
+    # resources.limits.memory -- How much memory a container never goes above
+    memory: 2Gi
+
+# env -- Environment variables for the container
+env: []
+
+telegram:
+  # telegram.enabled -- Toggle to enable sending the video to telegram
+  enabled: false
+  # telegram.botToken -- Telegram bot token
+  botToken: ""
+  # telegram.chatId -- Telegram chat ID
+  chatId: ""
+
+serviceAccount:
+  # serviceAccount.annotations -- Annotations to add to the service account
+  annotations: {}
+  # serviceAccount.name -- The name of the service account to use.
+  name: "timelapser"
+
+cronjob:
+  # cronjob.schedule -- A cron format string (such as `0 * * * *` or `@hourly`) to schedule the job creation and execution
+  schedule: '@daily'
+  # cronjob.suspend -- Toggle to control the scheduling of the jobs
+  suspend: false
+  # cronjob.concurrencyPolicy -- One of `Allow`, `Forbid`, `Replace` - [read more](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy)
+  concurrencyPolicy: Forbid
+  # cronjob.successfulJobsHistoryLimit -- Number of successefully ended pods to keep
+  successfulJobsHistoryLimit: 2
+  # cronjob.failedJobsHistoryLimit -- Number of failed ended pods to keep
+  failedJobsHistoryLimit: 3
+
+buckets:
+  # buckets.videosBucketName -- Name of the bucket to store the videos
+  videosBucketName: videos
+  # buckets.photosBucketName -- Name of the bucket that contains the snapshots
+  photosBucketName: photos
+  # buckets.s3Endpoint -- Endpoint of the bucket, useful when bucket is not at AWS
+  s3Endpoint: "https://gateway.storjshare.io"
+  # buckets.accessKeyId -- Access Key ID to populate the env var AWS_ACCESS_KEY_ID
+  accessKeyId: ""
+  # buckets.secretAccessKey -- Secret Access Key to populate the env var AWS_SECRET_ACCESS_KEY
+  secretAccessKey: ""
+
+process:
+  # process.imagesFromDay -- The relative day to process the images
+  imagesFromDay: yesterday
+  # process.imagesResolution -- The resolution of the images
+  imagesResolution: 2592x1520
