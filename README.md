@@ -12,6 +12,7 @@ All the configurations are set through environment variables.
 | `AWS_SECRET_ACCESS_KEY` | AWS secret access key | |
 | `AWS_ENDPOINT_URL` | AWS compatible endpoint URL | `https://gateway.storjshare.io` |
 | `PHOTOS_BUCKET_NAME` | Name of the bucket where the photos are stored | `photos` |
+| `SEND_VIDEO_TO_BUCKET_ENABLED` | Whether to send the video to bucket or not | `true` |
 | `VIDEOS_BUCKET_NAME` | Name of the bucket where the videos will be stored | `videos` |
 | `RESOLUTION` | Resolution of the photos | `2592x1520` |
 | `DAY_OF_THE_IMAGES` | Day of the images to download | `yesterday` (for the same day, use `today`) |

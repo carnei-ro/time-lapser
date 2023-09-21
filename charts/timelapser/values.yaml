@@ -76,3 +76,5 @@ process:
   imagesFromDay: yesterday
   # process.imagesResolution -- The resolution of the images
   imagesResolution: 2592x1520
+  # process.sendToBucket -- Toggle to send the video to the bucket
+  sendToBucket: true

@@ -1,0 +1,5 @@
+helm 3.8.1
+helm-docs 1.7.0
+helmfile 0.143.0
+kubectl 1.21.11
+kustomize 3.10.0

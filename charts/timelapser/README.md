@@ -28,6 +28,7 @@ Cronjob to download pictures from a Storj bucket, convert them to a video, uploa
 | podLabels | object | `{}` | Map of additional labels for the pod |
 | process.imagesFromDay | string | `"yesterday"` | The relative day to process the images |
 | process.imagesResolution | string | `"2592x1520"` | The resolution of the images |
+| process.sendToBucket | bool | `true` | Toggle to send the video to the bucket |
 | resources.limits.cpu | string | `"400m"` | How much CPU a container never goes above |
 | resources.limits.memory | string | `"2Gi"` | How much memory a container never goes above |
 | resources.requests.cpu | string | `"50m"` | How much CPU a container is guaranteed to get |

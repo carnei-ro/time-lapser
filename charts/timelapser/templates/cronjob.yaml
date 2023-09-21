@@ -46,6 +46,10 @@ spec:
                 - name: TELEGRAM_SEND_VIDEO_ENABLED
                   value: {{ .Values.telegram.enabled | quote }}
               {{- end }}
+              {{- if eq .Values.process.sendToBucket false }}
+                - name: SEND_VIDEO_TO_BUCKET_ENABLED
+                  value: {{ .Values.process.sendToBucket | quote }}
+              {{- end }}
               {{- with .Values.env }}
                 {{- toYaml . | nindent 16 }}
               {{- end }}
