@@ -22,7 +22,7 @@ Cronjob to download pictures from a Storj bucket, convert them to a video, uploa
 | fullnameOverride | string | `""` | Overrides the name |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/carnei-ro/time-lapser"` | Image name |
-| image.tag | string | `"sha-c359492"` | Image tag |
+| image.tag | string | `"sha-637dbdd"` | Image tag |
 | nameOverride | string | `""` | Overrides the release name |
 | podAnnotations | object | `{}` | Map of additional annotations for the pod |
 | podLabels | object | `{}` | Map of additional labels for the pod |
