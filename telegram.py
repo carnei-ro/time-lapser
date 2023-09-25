@@ -108,7 +108,7 @@ def sendMessage(options):
         httplib.HTTPConnection.debuglevel = 1
 
 
-    if options.aspect_ratio is not None:
+    if (options.aspect_ratio is not None) and (method == 'sendVideo'):
         payload['width'] = options.aspect_ratio.split('x')[0]
         payload['height'] = options.aspect_ratio.split('x')[1]
     url = apiurl(token=options.token, method=method)
