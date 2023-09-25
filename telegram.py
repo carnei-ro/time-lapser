@@ -153,7 +153,7 @@ def main():
     parser.add_argument('--token', action=EnvDefault, envvar='TELEGRAM_ACCESS_TOKEN', help='Your telegram access token',
                         dest='token')
     parser.add_argument('--video-aspect-ratio', action=EnvDefault, envvar='VIDEO_ASPECT_RATIO', help='Aspec ratio of video',
-                        dest='aspect_ratio')
+                        dest='aspect_ratio', default="1920x1080", required=False)
     options = parser.parse_args()
 
     if options.list_updates:

@@ -54,7 +54,7 @@ for HOSTNAME in $HOSTNAMES; do
   if [ $TELEGRAM_SEND_VIDEO_ENABLED == "true" ]; then
     echo "- sending video to telegram at chat id: ${TELEGRAM_CHAT_ID}"
     python /telegram.py -i "${TELEGRAM_CHAT_ID}" --token "${TELEGRAM_BOT_TOKEN}" -t "Video from $HOSTNAME on ${YEAR}-${MONTH}-${DAY}"
-    python /telegram.py -i "${TELEGRAM_CHAT_ID}" --token "${TELEGRAM_BOT_TOKEN}" --video-aspect-ratio "${RESOLUTION}" -f $HOSTNAME.mp4
+    python /telegram.py -i "${TELEGRAM_CHAT_ID}" --token "${TELEGRAM_BOT_TOKEN}" --video-aspect-ratio ${RESOLUTION} -f $HOSTNAME.mp4
   fi
   cd -
   rm -fr $HOSTNAME/${YEAR}${MONTH}${DAY}
