@@ -46,7 +46,7 @@ for HOSTNAME in $HOSTNAMES; do
   echo "- syncing images from s3://${PHOTOS_BUCKET_NAME}/$HOSTNAME/${YEAR}${MONTH}${DAY}/"
   aws s3 sync "s3://${PHOTOS_BUCKET_NAME}/$HOSTNAME/${YEAR}${MONTH}${DAY}/" .
   echo "- creating video"
-  ffmpeg -framerate 30 -pattern_type glob -i "*.jpg" -s:v ${RESOLUTION} -c:v libx264 -crf 17 -pix_fmt yuv420p $HOSTNAME.mp4
+  ffmpeg -framerate 24 -pattern_type glob -i "*.jpg" -s:v ${RESOLUTION} -c:v libx264 -crf 21 -pix_fmt yuv420p $HOSTNAME.mp4
   if [ $SEND_VIDEO_TO_BUCKET_ENABLED == "true" ]; then
     echo "- sending video to s3://${VIDEOS_BUCKET_NAME}/${YEAR}/${MONTH}/${DAY}/$HOSTNAME.mp4"
     aws s3 cp $HOSTNAME.mp4 s3://${VIDEOS_BUCKET_NAME}/${YEAR}/${MONTH}/${DAY}/$HOSTNAME.mp4
@@ -54,7 +54,7 @@ for HOSTNAME in $HOSTNAMES; do
   if [ $TELEGRAM_SEND_VIDEO_ENABLED == "true" ]; then
     echo "- sending video to telegram at chat id: ${TELEGRAM_CHAT_ID}"
     python /telegram.py -i "${TELEGRAM_CHAT_ID}" --token "${TELEGRAM_BOT_TOKEN}" -t "Video from $HOSTNAME on ${YEAR}-${MONTH}-${DAY}"
-    python /telegram.py -i "${TELEGRAM_CHAT_ID}" --token "${TELEGRAM_BOT_TOKEN}" -f $HOSTNAME.mp4
+    python /telegram.py -i "${TELEGRAM_CHAT_ID}" --token "${TELEGRAM_BOT_TOKEN}" --video-aspect-ratio "${RESOLUTION}" -f $HOSTNAME.mp4
   fi
   cd -
   rm -fr $HOSTNAME/${YEAR}${MONTH}${DAY}

@@ -107,6 +107,10 @@ def sendMessage(options):
 
         httplib.HTTPConnection.debuglevel = 1
 
+
+    if options.aspect_ratio is not None:
+        payload['width'] = options.aspect_ratio.split('x')[0]
+        payload['height'] = options.aspect_ratio.split('x')[1]
     url = apiurl(token=options.token, method=method)
     response = requests.post(url, data=payload, files=files)
 
@@ -148,7 +152,8 @@ def main():
                         dest='preformatted', action='store_true', default=False)
     parser.add_argument('--token', action=EnvDefault, envvar='TELEGRAM_ACCESS_TOKEN', help='Your telegram access token',
                         dest='token')
-
+    parser.add_argument('--video-aspect-ratio', action=EnvDefault, envvar='VIDEO_ASPECT_RATIO', help='Aspec ratio of video',
+                        dest='aspect_ratio')
     options = parser.parse_args()
 
     if options.list_updates:
