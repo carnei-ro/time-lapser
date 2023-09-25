@@ -14,7 +14,7 @@ image:
   # image.repository -- Image name
   repository: ghcr.io/carnei-ro/time-lapser
   # image.tag -- Image tag
-  tag: "sha-c359492"
+  tag: "sha-286cdc3"
   # image.pullPolicy -- Image pull policy
   pullPolicy: IfNotPresent
 
